@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export class ZReport {
   url: string;
@@ -15,7 +15,7 @@ export class ZReport {
   }> => {
     const res = await axios.post(this.url, {
       token: this.token,
-      method: "openZreport",
+      method: 'openZreport',
     });
     return res.data;
   };
@@ -26,7 +26,7 @@ export class ZReport {
   }> => {
     const res = await axios.post(this.url, {
       token: this.token,
-      method: "closeZreport",
+      method: 'closeZreport',
     });
     return res.data;
   };
@@ -36,15 +36,15 @@ export class ZReport {
     companyAddress: string;
     companyINN: string;
     staffName: string;
-    printerSize: number;
+    printerSize?: number;
     params: {
-      discountCard: {
-        available: number;
-        addition: number;
-        subtraction: number;
-        remainder: number;
+      discountCard?: {
+        available?: number;
+        addition?: number;
+        subtraction?: number;
+        remainder?: number;
       };
-      paycheckNumber: string;
+      paycheckNumber?: string;
       items: {
         discount: number;
         price: number;
@@ -53,13 +53,14 @@ export class ZReport {
         vatPercent: number;
         vat: number;
         name: string;
-        label: string;
+        label?: string;
+        commissionTIN?: string;
         classCode: string;
         other: number;
       }[];
       receivedCash: number;
       receivedCard: number;
-      extraInfos: {
+      extraInfos?: {
         extra1: string;
         extra2: string;
         extra3: string;
@@ -80,7 +81,7 @@ export class ZReport {
   }> => {
     const res = await axios.post(this.url, {
       token: this.token,
-      method: "sale",
+      method: 'sale',
       ...reqBody,
     });
     return res.data;
@@ -91,15 +92,15 @@ export class ZReport {
     companyAddress: string;
     companyINN: string;
     staffName: string;
-    printerSize: number;
+    printerSize?: number;
     params: {
-      discountCard: {
-        available: number;
-        addition: number;
-        subtraction: number;
-        remainder: number;
+      discountCard?: {
+        available?: number;
+        addition?: number;
+        subtraction?: number;
+        remainder?: number;
       };
-      paycheckNumber: string;
+      paycheckNumber?: string;
       items: {
         discount: number;
         price: number;
@@ -108,13 +109,14 @@ export class ZReport {
         vatPercent: number;
         vat: number;
         name: string;
-        label: string;
+        label?: string;
+        commissionTIN?: string;
         classCode: string;
         other: number;
       }[];
       receivedCash: number;
       receivedCard: number;
-      extraInfos: {
+      extraInfos?: {
         extra1: string;
         extra2: string;
         extra3: string;
@@ -135,14 +137,14 @@ export class ZReport {
   }> => {
     const res = await axios.post(this.url, {
       token: this.token,
-      method: "refund",
+      method: 'refund',
       ...reqBody,
     });
     return res.data;
   };
 
   reportInfo = async (reqBody: {
-    printerSize: number;
+    printerSize?: number;
     zReportId: number;
   }): Promise<{
     error: boolean;
@@ -168,14 +170,14 @@ export class ZReport {
   }> => {
     const res = await axios.post(this.url, {
       token: this.token,
-      method: "getZreportInfo",
+      method: 'getZreportInfo',
       ...reqBody,
     });
     return res.data;
   };
 
   reportInfoByNum = async (reqBody: {
-    printerSize: number;
+    printerSize?: number;
     zReportId: number;
   }): Promise<{
     error: boolean;
@@ -201,7 +203,7 @@ export class ZReport {
   }> => {
     const res = await axios.post(this.url, {
       token: this.token,
-      method: "getZReportInfoByNumber",
+      method: 'getZReportInfoByNumber',
       ...reqBody,
     });
     return res.data;
