@@ -1,4 +1,11 @@
 import axios from 'axios';
+import {
+  openClose,
+  reportInfoReq,
+  reportInfoRes,
+  saleRefundReq,
+  saleRefundRes,
+} from './types';
 
 export class ZReport {
   url: string;
@@ -9,10 +16,7 @@ export class ZReport {
     this.token = token;
   }
 
-  openReport = async (): Promise<{
-    error: boolean;
-    message: string;
-  }> => {
+  openReport = async (): Promise<openClose> => {
     const res = await axios.post(this.url, {
       token: this.token,
       method: 'openZreport',
@@ -20,10 +24,7 @@ export class ZReport {
     return res.data;
   };
 
-  closeReport = async (): Promise<{
-    error: boolean;
-    message: string;
-  }> => {
+  closeReport = async (): Promise<openClose> => {
     const res = await axios.post(this.url, {
       token: this.token,
       method: 'closeZreport',
@@ -31,54 +32,9 @@ export class ZReport {
     return res.data;
   };
 
-  sale = async (reqBody: {
-    companyName: string;
-    companyAddress: string;
-    companyINN: string;
-    staffName: string;
-    printerSize?: number;
-    params: {
-      discountCard?: {
-        available?: number;
-        addition?: number;
-        subtraction?: number;
-        remainder?: number;
-      };
-      paycheckNumber?: string;
-      items: {
-        discount: number;
-        price: number;
-        barcode: string;
-        amount: number;
-        vatPercent: number;
-        vat: number;
-        name: string;
-        label?: string;
-        commissionTIN?: string;
-        classCode: string;
-        other: number;
-      }[];
-      receivedCash: number;
-      receivedCard: number;
-      extraInfos?: {
-        extra1: string;
-        extra2: string;
-        extra3: string;
-      };
-    };
-  }): Promise<{
-    error: boolean;
-    paycheck: string;
-    info: {
-      terminalId: string;
-      receiptSeq: string;
-      fiscalSign: string;
-      qrCodeURL: string;
-      dateTime: string;
-    };
-    qrPath: string;
-    virtualNumber: string;
-  }> => {
+  sale = async (
+    reqBody: saleRefundReq
+  ): Promise<saleRefundRes> => {
     const res = await axios.post(this.url, {
       token: this.token,
       method: 'sale',
@@ -87,54 +43,9 @@ export class ZReport {
     return res.data;
   };
 
-  refund = async (reqBody: {
-    companyName: string;
-    companyAddress: string;
-    companyINN: string;
-    staffName: string;
-    printerSize?: number;
-    params: {
-      discountCard?: {
-        available?: number;
-        addition?: number;
-        subtraction?: number;
-        remainder?: number;
-      };
-      paycheckNumber?: string;
-      items: {
-        discount: number;
-        price: number;
-        barcode: string;
-        amount: number;
-        vatPercent: number;
-        vat: number;
-        name: string;
-        label?: string;
-        commissionTIN?: string;
-        classCode: string;
-        other: number;
-      }[];
-      receivedCash: number;
-      receivedCard: number;
-      extraInfos?: {
-        extra1: string;
-        extra2: string;
-        extra3: string;
-      };
-    };
-  }): Promise<{
-    error: boolean;
-    paycheck: string;
-    info: {
-      terminalId: string;
-      receiptSeq: string;
-      fiscalSign: string;
-      qrCodeURL: string;
-      dateTime: string;
-    };
-    qrPath: string;
-    virtualNumber: string;
-  }> => {
+  refund = async (
+    reqBody: saleRefundReq
+  ): Promise<saleRefundRes> => {
     const res = await axios.post(this.url, {
       token: this.token,
       method: 'refund',
@@ -143,31 +54,9 @@ export class ZReport {
     return res.data;
   };
 
-  reportInfo = async (reqBody: {
-    printerSize?: number;
-    zReportId: number;
-  }): Promise<{
-    error: boolean;
-    message: {
-      paycheck: string;
-      number: number;
-      count: number;
-      totalRefundCount: number;
-      firstReceiptSeq: string;
-      lastReceiptSeq: string;
-      totalSaleCount: number;
-      totalRefundCash: number;
-      totalRefundCard: number;
-      totalRefundVAT: number;
-      openTime: string;
-      terminalID: string;
-      totalSaleCard: number;
-      closeTime: string;
-      appletVersion: string;
-      totalSaleCash: number;
-      totalSaleVAT: number;
-    };
-  }> => {
+  reportInfo = async (
+    reqBody: reportInfoReq
+  ): Promise<reportInfoRes> => {
     const res = await axios.post(this.url, {
       token: this.token,
       method: 'getZreportInfo',
@@ -176,31 +65,9 @@ export class ZReport {
     return res.data;
   };
 
-  reportInfoByNum = async (reqBody: {
-    printerSize?: number;
-    zReportId: number;
-  }): Promise<{
-    error: boolean;
-    message: {
-      paycheck: string;
-      number: number;
-      count: number;
-      totalRefundCount: number;
-      firstReceiptSeq: string;
-      lastReceiptSeq: string;
-      totalSaleCount: number;
-      totalRefundCash: number;
-      totalRefundCard: number;
-      totalRefundVAT: number;
-      openTime: string;
-      terminalID: string;
-      totalSaleCard: number;
-      closeTime: string;
-      appletVersion: string;
-      totalSaleCash: number;
-      totalSaleVAT: number;
-    };
-  }> => {
+  reportInfoByNum = async (
+    reqBody: reportInfoReq
+  ): Promise<reportInfoRes> => {
     const res = await axios.post(this.url, {
       token: this.token,
       method: 'getZReportInfoByNumber',
